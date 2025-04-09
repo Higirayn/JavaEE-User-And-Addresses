@@ -14,7 +14,7 @@ import java.util.List;
 public class UpdateBean {
 
     @PersistenceContext(unitName = "ClientPU")
-    private EntityManager em;
+    private EntityManager em; // new EntityManager("ClientPu);
 
     public void createClient(String name, String type, String ip, String mac, String model, String addressText) {
         Client client = new Client();
@@ -41,26 +41,23 @@ public class UpdateBean {
             client.setType(type);
             client.setAdded(added);
 
-            // Update addresses
+
             List<Address> existingAddresses = client.getAddresses();
             for (int i = 0; i < ips.length; i++) {
                 if (i < existingAddresses.size()) {
-                    // Update existing address
-                    Address address = existingAddresses.get(i);
+                                       Address address = existingAddresses.get(i);
                     address.setIp(ips[i]);
                     address.setMac(macs[i]);
                     address.setModel(models[i]);
                     address.setAddress(addresses[i]);
                     em.merge(address);
                 } else {
-                    // Add new address
-                    Address newAddress = new Address(ips[i], macs[i], models[i], addresses[i], client);
+                                        Address newAddress = new Address(ips[i], macs[i], models[i], addresses[i], client);
                     em.persist(newAddress);
                     existingAddresses.add(newAddress);
                 }
             }
 
-            // Remove any extra addresses if new list is shorter
             if (ips.length < existingAddresses.size()) {
                 for (int i = ips.length; i < existingAddresses.size(); i++) {
                     em.remove(existingAddresses.get(i));
@@ -82,6 +79,4 @@ public class UpdateBean {
     public Client findClientById(int id) {
         return em.find(Client.class, id);
     }
-
-    // Аналогично: updateClient, deleteClient ...
 }
