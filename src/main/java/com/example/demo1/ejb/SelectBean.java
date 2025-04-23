@@ -21,14 +21,17 @@ public class SelectBean {
             queryStr += " AND c.type = :type";
         }
         if (search != null && !search.isEmpty()) {
-            queryStr += " AND (LOWER(c.clientName) LIKE :search OR LOWER(a.address) LIKE :search)";
+            queryStr += " AND (LOWER(c.client_name) LIKE :search OR LOWER(a.address) LIKE :search)";
         }
 
+        System.out.println(queryStr);
         TypedQuery<Client> query = em.createQuery(queryStr, Client.class);
 
         if (type != null && !type.isEmpty()) {
             query.setParameter("type", type);
         }
+
+        System.out.println(search);
         if (search != null && !search.isEmpty()) {
             query.setParameter("search", "%" + search.toLowerCase() + "%");
         }

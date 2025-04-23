@@ -1,5 +1,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page isELIgnored="false" %>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Создание клиента</title>
+</head>
+<body>
 <form method="post" action="create">
   Имя клиента: <input type="text" name="client_name" /><br>
   Тип клиента:
@@ -22,3 +32,5 @@
     </c:forEach>
   </ul>
 </c:if>
+</body>
+</html>
